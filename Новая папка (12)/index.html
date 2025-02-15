@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор Историй</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #00FF99;
+            color: #003322;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            width: 80%;
+            max-width: 900px;
+            background: #006644;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+        }
+        button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #003322;
+            color: #00FF99;
+            transition: background 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #002211;
+            transform: scale(1.05);
+        }
+        select, input {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            background: #004422;
+            color: #00FF99;
+            border: 2px solid #00FF99;
+            border-radius: 5px;
+        }
+        img {
+            margin-top: 20px;
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        .story-box {
+            background: #004422;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 2s;
+            color: #00FF99;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Генератор Историй</h1>
+        <label for="genre">Выберите жанр:</label>
+        <select id="genre">
+            <option>Фэнтези</option>
+            <option>Научная фантастика</option>
+            <option>Детектив</option>
+            <option>Ужасы</option>
+            <option>Комедия</option>
+            <option>Приключения</option>
+            <option>История Марса</option>
+        </select>
+        <br>
+        <label for="character">Введите героя:</label>
+        <input type="text" id="character" placeholder="Например, храбрый рыцарь">
+        <br>
+        <label for="difficulty">Сложность сюжета:</label>
+        <select id="difficulty">
+            <option>Простая</option>
+            <option>Средняя</option>
+            <option>Сложная</option>
+        </select>
+        <br>
+        <label for="setting">Выберите сеттинг:</label>
+        <select id="setting">
+            <option>Средневековье</option>
+            <option>Будущее</option>
+            <option>Постапокалипсис</option>
+            <option>Древний мир</option>
+        </select>
+        <br>
+        <button onclick="generateAndDisplayStory()">Создать Историю</button>
+        <div class="story-box" id="story">Нажмите кнопку, чтобы создать историю!</div>
+        <img id="story-image" src="" alt="" style="display: none;">
+    </div>
+
+    <script>
+        function generateStory() {
+            const genre = document.getElementById("genre").value;
+            const character = document.getElementById("character").value || "Неизвестный герой";
+            const difficulty = document.getElementById("difficulty").value;
+            const setting = document.getElementById("setting").value;
+            const locations = ["древний замок", "космический корабль", "заброшенный город", "подводный мир", "магическая школа", "поверхность Марса", "марсианская колония"];
+            const plotTwists = ["неожиданный враг", "временной парадокс", "неожиданная находка", "предательство друга", "портал в другой мир", "контакт с марсианами", "революция на Марсе"];
+            const conflicts = ["борьба за власть", "поиск древнего артефакта", "опасная миссия", "побег из плена", "война между мирами"];
+            const endings = ["герои одерживают победу", "мир оказывается иллюзией", "неожиданный союзник помогает", "конец остаётся открытым", "зло торжествует"];
+            
+            let complexityFactor = difficulty === "Сложная" ? 3 : difficulty === "Средняя" ? 2 : 1;
+            let story = `В жанре ${genre}, сеттинге ${setting}, главный герой - ${character}, попадает в ${locations[Math.floor(Math.random() * locations.length)]}. `;
+            
+            for (let i = 0; i < complexityFactor; i++) {
+                story += `Но всё идёт не по плану, когда происходит ${plotTwists[Math.floor(Math.random() * plotTwists.length)]}. `;
+                story += `Разгорается конфликт: ${conflicts[Math.floor(Math.random() * conflicts.length)]}. `;
+            }
+            
+            story += `В итоге, ${endings[Math.floor(Math.random() * endings.length)]}.`;
+            return story;
+        }
+
+        function generateAndDisplayStory() {
+            const storyText = generateStory();
+            const storyBox = document.getElementById("story");
+            storyBox.style.opacity = 0;
+            setTimeout(() => {
+                storyBox.innerText = storyText;
+                storyBox.style.opacity = 1;
+            }, 500);
+        }
+    </script>
+</body>
+</html>
